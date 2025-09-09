@@ -2,45 +2,72 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-    <title>My First Website</title>
-    </head>
-    <body>
-      <h1>Hello World!</h1>
-        <p>This is my first webpage.</p>
-          <!-- Connect Button -->
-            <button class="connect-button">Connect</button>
-            </body>
-            </html><!DOCTYPE html>
-            <html lang="en">
-            <head>
-              <meta charset="UTF-8">
-                <title>My First Website</title>
-                </head>
-                <body>
-                  <h1>Hello World!</h1>
-                    <p>This is my first website.</p>
+  <title>Web3 Wallet & NFT Example</title>
+</head>
+<body>
+  <h1>Web3 Wallet & NFT Demo</h1>
 
-                      <!-- Connect Button -->
-                        <button id="connectButton">Connect</button>
+  <!-- Connect Wallet -->
+  <button id="connectButton">Connect Wallet</button>
+  <p id="walletAddress">Wallet Address: Not connected</p>
 
-                          <script>
-                              const connectButton = document.getElementById("connectButton");
+  <!-- NFT Display -->
+  <h2>Your NFT</h2>
+  <button id="loadNFT">Load NFT</button>
+  <div id="nftDisplay">
+    <p>No NFT loaded yet</p>
+  </div>
 
-                                  connectButton.addEventListener("click", async () => {
-                                        if (typeof window.ethereum !== "undefined") {
-                                                try {
-                                                          const accounts = await window.ethereum.request({
-                                                                      method: "eth_requestAccounts"
-                                                                                });
-                                                                                          alert("Connected: " + accounts[0]);
-                                                                                                  } catch (error) {
-                                                                                                            console.error(error);
-                                                                                                                      alert("Connection failed!");
-                                                                                                                              }
-                                                                                                                                    } else {
-                                                                                                                                            alert("MetaMask not found! Please install MetaMask.");
-                                                                                                                                                  }
-                                                                                                                                                      });
-                                                                                                                                                        </script>
-                                                                                                                                                        </body>
-                                                                                                                                                        </html>
+  <script>
+    const connectButton = document.getElementById("connectButton");
+    const walletAddress = document.getElementById("walletAddress");
+    const loadNFT = document.getElementById("loadNFT");
+    const nftDisplay = document.getElementById("nftDisplay");
+
+    let userAccount = null;
+
+    // Connect to MetaMask
+    connectButton.addEventListener("click", async () => {
+      if (typeof window.ethereum !== "undefined") {
+        try {
+          const accounts = await window.ethereum.request({
+            method: "eth_requestAccounts"
+          });
+          userAccount = accounts[0];
+          walletAddress.textContent = "Wallet Address: " + userAccount;
+        } catch (error) {
+          console.error(error);
+          walletAddress.textContent = "Connection failed!";
+        }
+      } else {
+        walletAddress.textContent = "MetaMask not found! Please install it.";
+      }
+    });
+
+    // Load NFT (sample)
+    loadNFT.addEventListener("click", async () => {
+      if (!userAccount) {
+        nftDisplay.innerHTML = "<p>Please connect your wallet first!</p>";
+        return;
+      }
+
+      // Example NFT (static sample from IPFS)
+      nftDisplay.innerHTML = `
+        <h3>Sample NFT</h3>
+        <img src="https://ipfs.io/ipfs/bafkreigh2akiscaildc7v6f2zsy4bxhv2h5ec5z7z4qlmf3z6g7h6gk5pm" width="200" />
+        <p>Owner: ${userAccount}</p>
+      `;
+    });
+  </script>
+</body>
+</html>                         
+                                                                                                                        
+                                                                                                      
+                                                                                                              
+                                                                                                                                                                                                       
+                                                                                                                                
+                                                                                                                                      
+                                                                                                                                  
+                                                                                                                                            
+                                                                                                                                      
+                                                                                                                  
